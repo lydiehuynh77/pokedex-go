@@ -1,25 +1,11 @@
-pipeline {
-    agent any
-    stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Build image') {
-            steps {
-                docker build -t pokedex-go .
-            }
-        }
-        stage('Run container from image') {
-            steps {
-                docker run --rm -it -p 5555:5555 pokedex-go:latest
-            }
-        }
+node {
+    stage('Checkout Code') {
+        checkout scm
     }
-    post {
-        always {
-            cleanWs()
-        }
+    stage('Build image') {
+        docker build -t pokedex-go .
+    }
+    stage('Run container from image') {
+        docker run --rm -it -p 5555:5555 pokedex-go:latest
     }
 }
