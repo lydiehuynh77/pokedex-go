@@ -9,6 +9,7 @@ node {
     stage('Run image') {
         docker.image('pokedex-go').withRun('-p 5555:5555') { c ->
             sh 'docker ps'
+            sh 'curl localhost'
         }
     }
 }
