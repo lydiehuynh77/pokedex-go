@@ -1,14 +1,11 @@
 node {
-    def app
     stage('Checkout Code') {
         checkout scm
     }
     stage('Build image') {
-        app = docker.build('pokedex-go')
+        sh 'docker build -t pokedex-go .'
     }
     stage('Run image') {
-        docker.image('pokedex-go').withRun('-p 5555:5555') { c ->
-            sh 'docker ps'
-        }
+        sh 'docker run --rm -it -p 5555:5555 pokedex-go:latest'
     }
 }
