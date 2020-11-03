@@ -6,6 +6,7 @@ node {
         sh 'docker build -t pokedex-go .'
     }
     stage('Run image') {
-        sh 'docker run -d --rm -p 5555:5555 pokedex-go:latest'
+        sh 'docker rm -f mypokedex || true'
+        sh 'docker run -d --rm -p 5555:5555 --name mypokedex pokedex-go:latest'
     }
 }
